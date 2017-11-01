@@ -3,9 +3,9 @@ module.exports = function(app, passport) {
   
   // USER
 
-  app.get('/', function(req, res) {
-    res.status(200).send('Helloka');
-  })
+  // app.get('/', function(req, res) {
+  //   res.status(200).send('Helloka');
+  // })
 
   // app.get('/users/:id', function(req,res) {
   //   Console.log(req);

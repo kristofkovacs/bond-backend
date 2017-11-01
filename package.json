@@ -19,6 +19,8 @@
     "passport-google-id-token": "^0.4.3",
     "passport-google-oauth": "^1.0.0",
     "passport-google-oauth2": "^0.1.6",
-    "passport-google-oauth20": "^1.0.0"
-  }
+    "passport-google-oauth20": "^1.0.0",
+    "swagger-ui-express": "^2.0.9"
+  },
+  "minimist": "*"
 }
