@@ -1,29 +1,41 @@
-// This file will be used for configuring the app, and that alone.
-// All of the logic will be put in its respective directory regarding
-// the specific feature it will be implementing.
+var express = require("express");
+var config = require("./auth/config");
+var session = require("express-session");
+var passport = require("passport");
+var bodyparser = require('body-parser');
+var MemcachedStore = require("connect-memcached")(session);
+var db = require("./config/db");
+var morgan = require('morgan');
 
-var express = require("express")
-var config = require("./auth/config")
-var session = require("express-session")
-var passport = require("passport")
-var MemcachedStore = require("connect-memcached")(session)
-var db = require("./db")
+var app = express();
+var port = process.env.port || 3000
 
-var app = express()
+app.use(bodyparser.urlencoded({extended: true}));
+app.use(morgan('dev'));
 
-var UserController = require("./UserController")
-var CategoryController = require("./CategoryController")
-var EventController = require("./EventController")
+app.use(session({ secret: 'kurvaanyjatennekaszarlogintemanak' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(require("./auth/google").router)
+var UserController = require('./app/controllers/UserController');
+var CategoryController = require('./app/controllers/CategoryController');
+var EventController = require('./app/controllers/EventController');
+var AuthController = require('./app/controllers/AuthController');
 
-app.use("/users", UserController)
-app.use("/category", CategoryController)
-app.use("/events", EventController)
+app.use('/user', UserController);
+app.use('/category', CategoryController);
+app.use('/event', EventController);
+app.use('/auth', AuthController);
 
-// Configure the session and session storage.
+// require('./config/passport')(passport);
+
+// require('./app/routes')(app, passport);
+
+app.listen(port, function() {
+  console.log('Express server listening on port ' + port)
+})
+
+// // Configure the session and session storage.
 // var sessionConfig = {
 // 	resave: false,
 // 	saveUninitialized: false,
@@ -42,4 +54,4 @@ app.use("/events", EventController)
 
 // app.use(session(sessionConfig))
 
-module.exports = app
+// module.exports = app;

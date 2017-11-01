@@ -5,7 +5,7 @@ var router = express.Router()
 
 router.use(bodyParser.urlencoded({ extended: true }))
 
-var Event = require("./Event")
+var Event = require("../models/Event")
 
 // Get all events
 router.get("/", function(req, res) {

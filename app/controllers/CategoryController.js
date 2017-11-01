@@ -5,14 +5,14 @@ var router = express.Router()
 
 router.use(bodyParser.urlencoded({ extended: true }))
 
-var Category = require("./Category")
+var Category = require("../models/Category")
 
 // Get all categories
 router.get("/", function(req, res) {
 	Category.find({}, function(err, categories) {
 		if (err)
 			return res.status(500).send("There was a problem finding the categories.")
-		res.status(200).send(categories)
+		return res.status(200).send(categories)
 	})
 })
 
@@ -23,7 +23,7 @@ router.get("/:id", function(req, res) {
 			return res.status(500).send("There was a problem finding the category.")
 		if (!category)
 			return res.status(404).send("Category not found")
-		res.status(200).send(category)
+		return res.status(200).send(category)
 	})
 })
 
