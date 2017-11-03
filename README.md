@@ -1,64 +1,13 @@
-# Bond API Doc
-This document contains the endpoints of the API, request and response structures.
-## Status codes (for now)
-200: OK
-404: Not found
-500: Server error
+# Bond API Installation guide.
+API to serve the clients of our badass new product. 
 
-## Endpoints
-The base url is: **working on it**. Every endpoint contains this. 
-A JSON object is needed in the body of POST and PUT requests.
-A unique ID is automagically generated for every model object, it can be accessed through the `id` property.
-### User
-##### Get
-`./users`: returns every user
-`./users/:id`: returns the user for the given ID.
-##### Post
-`./users`: posts a user
-body: 
-```javascript
-[
-    {
-        name: String,
-	    email: String,
-	    password: String
-    }
-]
-```
-### Category
-##### Get
-`./category`: returns every category
-`./category/:id` : returns the category for the given ID.
-##### Post
-`./category`: posts a category
-body: 
-```javascript
-[
-    {
-        name: String,
-	    thumbnail_url: String
-    }
-]
-```
-### Event
-##### Get
-`./events`: returns every event
-`./events/:id` : returns the event for the given ID.
-##### Post
-`./events`: posts an event
-body: 
-```javascript
-[
-    {
-        creator_id: String,
-    	category: { 
-            name: String,
-            thumbnail_url: String
-        },
-	    date: String,
-	    time: String,
-	    attendees_count: Number, (Int)
-	    max_attendees: Number, (Int)
-    }
-]
-```
+## Requirements
+Every request must contain the header `Content-Type` : `application/json`.
+
+## Installation
+ Install node.js, install npm, [see here how to do it.](http://blog.teamtreehouse.com/install-node-js-npm-windows)
+ Clone the project from github. 
+ Install the dependencies from `package.json` using **npm**.
+ Start the server by running **node `app.js`** .
+ If the server is **up**, and **running**, [click here](http://localhost:3000) to see the `fancy API Doc`.
+ If you encounter any **abnormalities**, **funny `javascript` errors**, or just want to have a talk, contact me on Slack.
