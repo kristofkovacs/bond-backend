@@ -3,6 +3,7 @@ var mongoose = require("mongoose")
 var EventSchema = mongoose.Schema({
   creator_id: String,
 	category: { 
+    _id: String,
     name: String,
     thumbnail_url: String
   },

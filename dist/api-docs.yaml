@@ -3,7 +3,22 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: BOND API
-  description: API to do serve the clients of our badass new product.
+  description: | 
+              API to serve the clients of our badass new product. 
+
+              Requirements \:
+              Every request must contain the header 'Content-Type - application/json'.
+
+              Installation \:
+              -> Install node.js, install npm http://blog.teamtreehouse.com/install-node-js-npm-windows.
+              -> Clone the project from github. 
+              -> Install the dependencies from package.json using npm.
+              -> Start the server by running node app.js .
+              -> If you encounter any abnormalities, funny javascript errors, or just want to have a talk, contact me on Slack.
+  
+
+
+              
 
 schemes:
   - http
@@ -11,17 +26,36 @@ host: localhost
 basePath: /
 
 paths:
-  /login:
+  /auth/emailExists:
+    post:
+      summary: Checks if the provided email exists.
+      parameters: 
+        - name: email
+          in: query
+          required: true
+          description: Email address to check
+          type: string
+      responses:
+        302:
+          description: The user exists, proceed with login.
+        404: 
+          description: No user with this email, proceed with sign-up.
+        500:
+          descritpion: Server error.
+  
+  /auth/login:
     post:
       summary: Validates the given credentials, and returns with the user, if it exists.
       description: Returns the user object, if it exists.
       parameters:
        - name: email
          in: query
+         required: true
          description: Email address of the user.
          type: string
        - name: password
          in: query
+         required: true
          description: The password of the user.
          type: string
       responses:
@@ -29,22 +63,26 @@ paths:
           description: A User Object
           schema:
             $ref: "#/definitions/User"
+        401:
+          description: Wrong password
         404:
           description: User not found
         500:
           description: Server error
 
-  /sign-up:
+  /auth/sign-up:
     post:
       summary: Saves the credentials of a new user.
       description: Returns the user object, if it exists.
       parameters:
        - name: email
          in: query
+         required: true
          description: Email address of the user.
          type: string
        - name: password
          in: query
+         required: true
          description: The password of the user.
          type: string
        - name: name
@@ -97,6 +135,7 @@ paths:
               $ref: "#/definitions/Category"
         500:
           description: Server error
+     
   /category/{id}:
     get:
       summary: Returns a category for it's id.
@@ -115,6 +154,107 @@ paths:
           description: Category not found
         500:
           description: Server error
+    delete:
+      summary: Deletes the category for the given id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The category's id.
+          type: string
+      responses:
+        200:
+          description: A Category Object
+          schema:
+            $ref: "#/definitions/Category"
+        500:
+          description: Server error
+
+  /event:
+    get:
+      summary: Returns every event stored in the database.
+      responses:
+        200:
+          description: A list of event objects
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Event"
+        500:
+          description: Server error
+
+    post:
+      summary: Posts a new event.
+      description: Returns the Event object.
+      parameters: 
+       - name: category
+         in: query
+         required: true
+         description: The category of the event.
+         type: "category"
+       - name: date
+         in: query
+         description: The date when the event is happening.
+         type: string
+       - name: time
+         in: query
+         description: The time the event is happening.
+         type: string
+       - name: attendees_count
+         in: query
+         description: The current attendees of the event.
+         type: integer
+       - name: max_attendees
+         in: query
+         description: The url of the category's picture.
+         type: integer
+      responses:
+        200:
+          description: An event object
+          schema:
+            $ref: "#/definitions/Event"
+        500:
+          description: Server error
+
+  /event/{id}:
+    get:
+      summary: Returns an event for it's id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The events's id.
+          type: string
+      responses:
+        200:
+          description: An event Object
+          schema:
+            $ref: "#/definitions/Event"
+        404:
+          description: Event not found
+        500:
+          description: Server error
+    delete:
+      summary: Deletes the event for the given id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The event's id.
+          type: string
+      responses:
+        200:
+          description: A Event Object
+          schema:
+            $ref: "#/definitions/Event"
+        500:
+          description: Server error
+
+  /user/{id}:
+    put:
+      summary: Updates the user with the fields in the request's body.
+
+  
 
 definitions:
   User:
@@ -143,3 +283,21 @@ definitions:
         type: string
       thumbnail_url:
         type: string
+
+  Event:
+    required:
+      - category
+    properties:
+      _id:
+        type: string
+      category:
+        type: "Category"
+      date:
+        type: string
+      time:
+        type: string
+      attendees_count: 
+        type: integer
+      max_attendees:
+        type: integer
+        

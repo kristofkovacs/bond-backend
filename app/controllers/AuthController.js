@@ -3,7 +3,20 @@ var bodyParser = require("body-parser")
 
 var router = express.Router()
 
-router.use(bodyParser.urlencoded({ extended: true }))
+router.use(bodyParser.json())
+
+var User = require("../models/User")
+
+router.post('/emailExists', function(req, res) {
+  User.findOne( { email: req.body.email }, function(err, user) {
+    if (err)
+      return res.status(500).send('There was a problem while checking email!');
+    if(!user)
+      return res.status(404).send('No user for this email');
+    if (user)
+      return res.status(302).send('User exists for this email');
+  })
+})
 
 router.post('/login', function(req, res) {
   User.findOne({email: req.body.email} , function(err, user) {

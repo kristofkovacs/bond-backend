@@ -3,7 +3,7 @@ var bodyParser = require("body-parser")
 
 var router = express.Router()
 
-router.use(bodyParser.urlencoded({ extended: true }))
+router.use(bodyParser.json())
 
 var User = require("../models/User")
 
@@ -18,7 +18,7 @@ router.get("/", function(req, res) {
 // Get one user by id
 router.get("/:id", function(req,res) {
 	User.findById(req.params.id, function(err, user) {
-		Console.log(user);
+		// Console.log(user);
 		if (err)
 			return res.status(500).send("There was a problem finding the user")
 		if (!user)
@@ -29,10 +29,11 @@ router.get("/:id", function(req,res) {
 
 // Updates a single user in the database
 router.put("/:id", function(req, res) {
-	Console.log(req);
+	console.log(req.body);
 	User.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(err, user) {
 		if (err) 
 			return res.status(500).send("There was a problem updating the user.")
+		console.log(user);
 		res.status(200).send(user)
 	})
 });
@@ -44,6 +45,6 @@ router.delete("/:id", function(req, res) {
 			return res.status(500).send("There was a problem deleting the user.")
 		res.status(200).send("User "+ user.name +" was deleted.")
 	})
-})
+});
 
 module.exports = router

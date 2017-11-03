@@ -3,7 +3,7 @@ var bodyParser = require("body-parser")
 
 var router = express.Router()
 
-router.use(bodyParser.urlencoded({ extended: true }))
+router.use(bodyParser.json())
 
 var Event = require("../models/Event")
 
@@ -42,6 +42,14 @@ router.post("/", function(req, res) {
 		if (err)
 			return res.status(500).send("Error while creating event: " + err)
 		res.status(200).send(event)
+	})
+})
+
+router.delete("/:id", function(req, res) {
+	Event.findByIdAndRemove(req.params.id, function(err, event) {
+		if (err) 
+			return res.status(500).send("There was a problem deleting the event.")
+		res.status(200).send("Event "+ event.id +" was deleted.")
 	})
 })
 
