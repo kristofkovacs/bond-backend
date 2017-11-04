@@ -27,22 +27,51 @@ router.get("/:id", function(req, res) {
 })
 
 // Post an event
-router.post("/", function(req, res) {
-	Event.create({
-		creator_id: req.body.creator_id,
-		category: { 
-			name: req.body.category.name,
-			thumbnail_url: req.body.category.thumbnail_url
-		},
-		date: req.body.date,
-		time: req.body.time,
-		attendees_count: req.body.attendees_count,
-		max_attendees: req.body.max_attendees
-	}, function(err, event) {
-		if (err)
-			return res.status(500).send("Error while creating event: " + err)
-		res.status(200).send(event)
-	})
+// router.post("/", function(req, res) {
+// 	Event.create({
+// 		creator_id: req.body.creator_id,
+// 		category: { 
+// 			name: req.body.category.name,
+// 			thumbnail_url: req.body.category.thumbnail_url
+// 		},
+// 		date: req.body.date,
+// 		time: req.body.time,
+// 		attendees_count: req.body.attendees_count,
+// 		max_attendees: req.body.max_attendees
+// 	}, function(err, event) {
+// 		if (err)
+// 			return res.status(500).send("Error while creating event: " + err)
+// 		res.status(200).send(event)
+// 	})
+// })
+
+router.post('/', function(req, res) {
+	var reqEvents = req.body;
+	var resEvents = [];
+	var eventsProcessed = 0;
+	
+	reqEvents.forEach(function(reqEvent) {
+		Event.create({
+			creator_id: reqEvent.creator_id,
+			category: { 
+				_id: reqEvent._id,
+				name: reqEvent.category.name,
+				thumbnail_url: reqEvent.category.thumbnail_url
+			},
+			date: reqEvent.date,
+			time: reqEvent.time,
+			attendees_count: reqEvent.attendees_count,
+			max_attendees: reqEvent.max_attendees
+		}, function(err, event) {
+			if (err)
+				return res.status(500).send("Error while creating event: " + err)
+			eventsProcessed++;
+			resEvents.push(event);
+			if (eventsProcessed === reqEvents.length) {
+				return res.status(200).send(resEvents)
+			}
+		})
+	}, this);
 })
 
 router.delete("/:id", function(req, res) {
