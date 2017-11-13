@@ -22,11 +22,15 @@ var UserController = require('./app/controllers/UserController');
 var CategoryController = require('./app/controllers/CategoryController');
 var EventController = require('./app/controllers/EventController');
 var AuthController = require('./app/controllers/AuthController');
+var GoogleAuthController = require('./auth/google');
 
 app.use('/user', UserController);
 app.use('/category', CategoryController);
 app.use('/event', EventController);
 app.use('/auth', AuthController);
+app.use('/google', GoogleAuthController);
+
+
 
 // SWAGGER START
 var argv = require('minimist')(process.argv.slice(2));

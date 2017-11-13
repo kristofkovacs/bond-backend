@@ -22,8 +22,6 @@ passport.use(new GoogleStrategy({
   clientID        : authConfig.googleAuth.clientID,
   clientSecret    : authConfig.googleAuth.clientSecret,
   callbackURL     : authConfig.googleAuth.callbackURL,
-  }, function() {
-    Console.log('ide bejon');
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
@@ -69,12 +67,8 @@ function(req, res) {
   Console.log('callback')
   const redirect = req.session.oauth2return || '/';
   delete req.session.oauth2return;
-  res.redirect(redirect);
-  
-  
-  // res.send(req.user ? 200 : 401);
+  // res.redirect(redirect);
+  res.send(req.user ? 200 : 401);
 });
 
-module.exports = {
-	router: router
-}
+module.exports = router

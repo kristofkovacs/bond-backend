@@ -5,11 +5,11 @@ var router = express.Router()
 
 router.use(bodyParser.json())
 
-var Event = require("../models/Event")
+var EventModel = require("../models/Event")
 
 // Get all events
 router.get("/", function(req, res) {
-	Event.find({}, function(err, events) {
+	EventModel.find({}, function(err, events) {
 		if (err)
 			return res.status(500).send("Error while getting events: " + err)
 		res.status(200).send(events)
@@ -17,7 +17,9 @@ router.get("/", function(req, res) {
 })
 
 router.get("/:id", function(req, res) {
-	Event.findById(req.params.id), function(err, event) {
+	console.log(req.param.id);
+	EventModel.findById(req.params.id), function(err, event) {
+		console.log(req.param.id)
 		if (err)
 			return res.status(500).send("Error while fetching event: " + err)
 		if (!event)
@@ -51,7 +53,7 @@ router.post('/', function(req, res) {
 	var eventsProcessed = 0;
 	
 	reqEvents.forEach(function(reqEvent) {
-		Event.create({
+		EventModel.create({
 			creator_id: reqEvent.creator_id,
 			category: { 
 				_id: reqEvent._id,
@@ -75,7 +77,7 @@ router.post('/', function(req, res) {
 })
 
 router.delete("/:id", function(req, res) {
-	Event.findByIdAndRemove(req.params.id, function(err, event) {
+	EventModel.findByIdAndRemove(req.params.id, function(err, event) {
 		if (err) 
 			return res.status(500).send("There was a problem deleting the event.")
 		res.status(200).send("Event "+ event.id +" was deleted.")
