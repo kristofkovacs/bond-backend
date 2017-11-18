@@ -56,14 +56,14 @@ app.use(express.static('dist'));
 swagger.configureSwaggerPaths('', 'api-docs', '');
 
 // Configure the API domain
-var domain = '127.0.0.1';
+var domain = '0.0.0.0';
 if(argv.domain !== undefined)
     domain = argv.domain;
 else
     console.log('No --domain=xxx specified, taking default hostname "localhost".')
 
 // Configure the API port
-var port = 3000;
+var port = 8080;
 if(argv.port !== undefined)
     port = argv.port;
 else
