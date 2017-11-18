@@ -56,7 +56,7 @@ app.use(express.static('dist'));
 swagger.configureSwaggerPaths('', 'api-docs', '');
 
 // Configure the API domain
-var domain = 'localhost';
+var domain = '127.0.0.1';
 if(argv.domain !== undefined)
     domain = argv.domain;
 else

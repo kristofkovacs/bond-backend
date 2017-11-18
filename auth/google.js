@@ -1,6 +1,6 @@
 var express = require("express");
 var config = require("./config");
-var authConfig = require('./auth');
+var authConfig = require('../config/auth');
 var bodyParser = require("body-parser");
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
