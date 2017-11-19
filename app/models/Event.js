@@ -4,7 +4,7 @@ var EventSchema = mongoose.Schema({
   creator_id: String,
 	category_id: String,
   attendees: [String],
-  is_private: Boolean,
+  is_private: {type: Boolean, default: false},
   location: {
     lat: Number,
     lon: Number
