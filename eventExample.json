@@ -1,37 +1,30 @@
-[{
-  "category": {
-    "name": "Chess"
+[
+  {
+    "creator_id": "59f9b718894d38911b0db4c5",
+    "category_id": "59f5b73462945e18616b246d",
+    "attendees": ["59f9b718894d38911b0db4c5"],
+    "is_private": false,
+    "location": {
+      "lat": 47.4900663,
+      "lon": 19.022626
+    },
+    "address": "1123 Budapest, Csörsz u. 14-16.",
+    "date_begin": 1513875600000,
+    "attendees_min": 10,
+    "attendees_max": 16
   },
-  "date": "27/11/2017",
-  "time": "15:00",
-  "attendees_count": 1,
-  "max_attendees": 10
-},
-{
-  "category": {
-    "name": "Football"
-  },
-  "date": "28/11/2017",
-  "time": "18:00",
-  "attendees_count": 1,
-  "max_attendees": 10
-},
-{
-  "category": {
-    "name": "Chess"
-  },
-  "date": "11/12/2017",
-  "time": "15:00",
-  "attendees_count": 1,
-  "max_attendees": 10
-},
-{
-  "category": {
-    "name": "Football"
-  },
-  "date": "28/11/2017",
-  "time": "18:00",
-  "attendees_count": 1,
-  "max_attendees": 10
-}
+  {
+    "creator_id": "59f9b718894d38911b0db4c5",
+    "category_id": "59f5b73462945e18616b246d",
+    "attendees": ["59f9b718894d38911b0db4c5"],
+    "is_private": false,
+    "location": {
+      "lat": 47.4900663,
+      "lon": 19.022626
+    },
+    "address": "1123 Budapest, Csörsz u. 14-16.",
+    "date_begin": 1514484000000,
+    "attendees_min": 10,
+    "attendees_max": 16
+  }
 ]

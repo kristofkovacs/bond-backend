@@ -9,20 +9,11 @@ info:
               Requirements \:
               Every request must contain the header 'Content-Type - application/json'.
 
-              Installation \:
-              -> Install node.js, install npm http://blog.teamtreehouse.com/install-node-js-npm-windows.
-              -> Clone the project from github. 
-              -> Install the dependencies from package.json using npm.
-              -> Start the server by running node app.js .
-              -> If you encounter any abnormalities, funny javascript errors, or just want to have a talk, contact me on Slack.
-  
 
-
-              
 
 schemes:
   - http
-host: localhost
+host:
 basePath: /
 
 paths:
@@ -290,14 +281,34 @@ definitions:
     properties:
       _id:
         type: string
-      category:
-        type: "Category"
-      date:
+      category_id:
         type: string
-      time:
+      creator_id:
         type: string
+      attendees:
+        type: [string]
+      is_private:
+        type: boolean
+      location:
+        type: Location
+      address:
+        type: string
+      date_created:
+        type: Int64
+      date_modified:
+        type: Int64
+      date_begin:
+        type: Int64
       attendees_count: 
         type: integer
-      max_attendees:
+      attendees_min:
         type: integer
-        
+      attendees_max:
+        type: integer
+
+  Location:
+    properties:
+      lat:
+        type: Double
+      lon:
+        type: Double

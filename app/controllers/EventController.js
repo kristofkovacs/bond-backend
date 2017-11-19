@@ -28,25 +28,6 @@ router.get("/:id", function(req, res) {
 	}
 })
 
-// Post an event
-// router.post("/", function(req, res) {
-// 	Event.create({
-// 		creator_id: req.body.creator_id,
-// 		category: { 
-// 			name: req.body.category.name,
-// 			thumbnail_url: req.body.category.thumbnail_url
-// 		},
-// 		date: req.body.date,
-// 		time: req.body.time,
-// 		attendees_count: req.body.attendees_count,
-// 		max_attendees: req.body.max_attendees
-// 	}, function(err, event) {
-// 		if (err)
-// 			return res.status(500).send("Error while creating event: " + err)
-// 		res.status(200).send(event)
-// 	})
-// })
-
 router.post('/', function(req, res) {
 	var reqEvents = req.body;
 	var resEvents = [];
@@ -55,15 +36,20 @@ router.post('/', function(req, res) {
 	reqEvents.forEach(function(reqEvent) {
 		EventModel.create({
 			creator_id: reqEvent.creator_id,
-			category: { 
-				_id: reqEvent._id,
-				name: reqEvent.category.name,
-				thumbnail_url: reqEvent.category.thumbnail_url
+			category_id: reqEvent.category_id,
+			attendees: [reqEvent.creator_id],
+			is_private: Boolean,
+			location: {
+				lat: reqEvent.location.lat,
+				lon: reqEvent.location.lon
 			},
-			date: reqEvent.date,
-			time: reqEvent.time,
-			attendees_count: reqEvent.attendees_count,
-			max_attendees: reqEvent.max_attendees
+			address: reqEvent.address,
+			date_created: new Date().getTime(),
+			date_modified: new Date().getTime(),
+			date_begin: reqEvent.date_begin,
+			attendees_count: 1,
+			attendees_min: reqEvent.attendees_min,
+			attendees_max: reqEvent.attendees_max
 		}, function(err, event) {
 			if (err)
 				return res.status(500).send("Error while creating event: " + err)
@@ -83,5 +69,11 @@ router.delete("/:id", function(req, res) {
 		res.status(200).send("Event "+ event.id +" was deleted.")
 	})
 })
+
+router.delete("/all", function(req, res) {
+	EventModel.remove({}, function(err, num) {
+		console.log("removed" + num + "events");
+	})
+});
 
 module.exports = router

@@ -57,6 +57,7 @@ swagger.configureSwaggerPaths('', 'api-docs', '');
 
 // Configure the API domain
 var domain = '0.0.0.0';
+//var domain = 'localhost';
 if(argv.domain !== undefined)
     domain = argv.domain;
 else

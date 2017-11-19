@@ -2,16 +2,20 @@ var mongoose = require("mongoose")
 
 var EventSchema = mongoose.Schema({
   creator_id: String,
-	category: { 
-    _id: String,
-    name: String,
-    thumbnail_url: String
+	category_id: String,
+  attendees: [String],
+  is_private: Boolean,
+  location: {
+    lat: Number,
+    lon: Number
   },
-  //location_id: String,
-	date: String,
-	time: String,
-	attendees_count: Number,
-	max_attendees: Number,
+  address: String,
+  date_created: Number,
+  date_modified: Number,
+  date_begin: Number,
+  attendees_count: Number,
+	attendees_min: Number,
+  attendees_max: Number
 })
 
 mongoose.model("Event", EventSchema)
