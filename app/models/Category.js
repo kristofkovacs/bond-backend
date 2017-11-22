@@ -1,10 +1,13 @@
-var mongoose = require("mongoose")
+var mongoose = require("mongoose");
+var activity = require('./Activity');
+
+// var Activity = mongoose.model('Activity');
 
 var CategorySchema = mongoose.Schema({
 	name: String,
-	thumbnail_url: String
-})
+	activities: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Activity'} ]
+});
 
-mongoose.model("Category", CategorySchema)
+mongoose.model("Category", CategorySchema);
 
-module.exports = mongoose.model("Category")
+module.exports = mongoose.model("Category");
