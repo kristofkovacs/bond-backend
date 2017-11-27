@@ -96,7 +96,7 @@ router.delete("/:id", function(req, res) {
 	})
 })
 
-router.delete("/all", function(req, res) {
+router.delete("/", function(req, res) {
 	EventModel.remove({}, function(err, num) {
 		console.log("removed" + num + "events");
 	})

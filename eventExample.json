@@ -1,7 +1,8 @@
 [
+  // football
   {
     "creator_id": "59f9b718894d38911b0db4c5",
-    "category_id": "59f5b73462945e18616b246d",
+    "category_id": "5a15f4bdcee36a0925164d7b",
     "attendees": ["59f9b718894d38911b0db4c5"],
     "is_private": false,
     "location": {
@@ -13,9 +14,10 @@
     "attendees_min": 10,
     "attendees_max": 16
   },
+  // chess
   {
     "creator_id": "59f9b718894d38911b0db4c5",
-    "category_id": "59f5b73462945e18616b246d",
+    "category_id": "5a15f70ec149d909561a2177",
     "attendees": ["59f9b718894d38911b0db4c5"],
     "is_private": false,
     "location": {
