@@ -2,30 +2,12 @@ var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = mongoose.Schema({
-	// google: {
-	// 	id: String,
-	// 	accessToken: String,
-	// 	refreshToken: String,
-	// 	name: String,
-	// 	email: String
-	// },
-	// facebook: {
-	// 	email: String,
-   //  facebookProvider: {
-   //    type: {
-   //      id: String,
-   //      token: String
-   //    },
-   //    select: false
-   //  }
-	// },
-  //
-	// local: {
-		name: String,
-		email: String,
-		password: String,
-		preferredCategories: [""]
-	// }
+
+	name: String,
+	email: String,
+	password: String,
+	preferredCategories: [""]
+
 });
 
 // generating a hash

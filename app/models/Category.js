@@ -1,8 +1,6 @@
 var mongoose = require("mongoose");
 var activity = require('./Activity');
 
-// var Activity = mongoose.model('Activity');
-
 var CategorySchema = mongoose.Schema({
 	name: String,
 	activities: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Activity'} ]

@@ -34,7 +34,6 @@ router.get("/:id", function(req, res) {
 		});
 });
 
-// TODO: what if the category already exists? Should names be unique?
 // Post a category
 router.post("/", function(req, res) {
   var myActivities = new Array();

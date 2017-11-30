@@ -30,8 +30,6 @@ app.use('/event', EventController);
 app.use('/auth', AuthController);
 app.use('/google', GoogleAuthController);
 
-
-
 // SWAGGER START
 var argv = require('minimist')(process.argv.slice(2));
 var subpath = express();
@@ -76,16 +74,10 @@ console.log('snapJob API running on ' + applicationUrl);
 
 swagger.configure(applicationUrl, '1.0.0');
 
-// subpath.listen(port, function() {
-//   console.log('Swagger listening on port ' + port);
-// })
-
 // SWAGGER END
 
 app.listen(port, function() {
   console.log('Express server listening on port ' + port);
 })
 
-// require('./config/passport')(passport);
 
-// require('./app/routes')(app, passport);
