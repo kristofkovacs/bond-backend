@@ -1,5 +1,6 @@
 import FluentSQLite
 import Vapor
+import Foundation
 
 /// Called before your application initializes.
 ///
@@ -18,13 +19,13 @@ public func configure(
     services.register(router, as: Router.self)
 
     // Configure a SQLite database
-    var databases = DatabaseConfig()
-    try databases.add(database: SQLiteDatabase(storage: .memory), as: .sqlite)
+    var databases = DatabaseConfig()    
+    try databases.add(database: SQLiteDatabase(storage: .file(path: "/Users/dmt/Desktop/bond.sqlite")), as: .sqlite )
     services.register(databases)
 
     // Configure migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Todo.self, database: .sqlite)
+    migrations.add(model: Activity.self, database: .sqlite)
     services.register(migrations)
 
     // Configure the rest of your application here

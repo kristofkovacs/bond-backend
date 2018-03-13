@@ -2,10 +2,8 @@ import Foundation
 import FluentSQLite
 import Vapor
 
-final class Conversation: SQLiteModel {
-    typealias ID = String
-    static let idKey: IDKey = \.id
-    
+final class Conversation: SQLiteStringModel {
+
     var id: String?
     var eventId: String?
     

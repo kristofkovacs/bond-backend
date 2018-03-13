@@ -2,9 +2,7 @@ import FluentSQLite
 import Foundation
 import Vapor
 
-final class Event: SQLiteModel {
-    typealias ID = String
-    static let idKey: IDKey = \.id
+final class Event: SQLiteStringModel {
     
     var id: String?
     var activityId: String?
@@ -16,10 +14,10 @@ final class Event: SQLiteModel {
     var spotsRemaining: Int?
     var description: String?
     var isPrivate: Bool = false
+    var createdAt: Date?
+    var updatedAt: Date?
     
 }
-
-
 
 extension Event {
     var conversations: Children<Event, Conversation> {

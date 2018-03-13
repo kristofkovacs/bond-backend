@@ -2,9 +2,8 @@ import Foundation
 import FluentSQLite
 import Vapor
 
-final class Message: SQLiteModel {
-    typealias ID = String
-    static let idKey: IDKey = \Message.id
+final class Message: SQLiteStringModel {
+    
     
     var id: String?
     var conversationId: String?
@@ -12,13 +11,24 @@ final class Message: SQLiteModel {
     var recipientId: String?
     var content: String?
     var isRead: Bool?
-    var date: Int? // if we implement Timestampable protocol, we will have createdAt date by default.
+    var createdAt: Date?
+    var updatedAt: Date?
     
 }
 
 extension Message {
     var conversation: Parent<Message, Conversation>? {
         return parent(\.conversationId)
+    }
+}
+
+extension Message: Timestampable {
+    static var createdAtKey: WritableKeyPath<Message, Date?> {
+        return \Message.createdAt
+    }
+    
+    static var updatedAtKey: WritableKeyPath<Message, Date?> {
+        return \Message.updatedAt
     }
 }
 

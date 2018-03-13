@@ -9,7 +9,8 @@ public func routes(_ router: Router) throws {
     router.get("hello") { req in
         return "Hello, world!"
     }
-
+    
+    
     // Example of creating a Service and using it.
     router.get("hash", String.parameter) { req -> String in
         // Create a BCryptHasher using the Request's Container
@@ -21,10 +22,13 @@ public func routes(_ router: Router) throws {
         // Return the hashed string!
         return try hasher.make(string)
     }
-
+    
+    let activityController = ActivityController()
+    router.get("activity", use: activityController.index)
+    router.get("activity", Activity.parameter, use: activityController.getActivity)
+    router.post(Activity.self, at: "activity", use: activityController.create)
+    router.delete("activity", use: activityController.delete)
+    
     // Example of configuring a controller
-    let todoController = TodoController()
-    router.get("todos", use: todoController.index)
-    router.post("todos", use: todoController.create)
-    router.delete("todos", Todo.parameter, use: todoController.delete)
+    
 }

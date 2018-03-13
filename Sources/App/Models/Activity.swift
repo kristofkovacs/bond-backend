@@ -2,9 +2,6 @@ import Vapor
 import FluentSQLite
 
 final class Activity: SQLiteModel {
-    typealias ID = Int
-    
-    static let idKey: IDKey = \Activity.id
     
     var id: Int?
     var name: String?

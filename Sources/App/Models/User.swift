@@ -2,9 +2,8 @@ import Foundation
 import FluentSQLite
 import Vapor
 
-final class User: SQLiteModel {
-    typealias ID = String
-    static let idKey: IDKey = \User.id
+final class User: SQLiteStringModel {
+    
     
     var id: String?
     var email: String?
@@ -13,15 +12,10 @@ final class User: SQLiteModel {
     
 }
 
-
-
 extension User {
-    var activities: Siblings<User, Activity, UserActivityPivot> {
-        return siblings()
-    }
-    
-    
-    
+//    var activities: Siblings<User, Activity, UserActivityPivot> {
+//        return siblings()
+//    }
 }
 
 extension User: Migration { }
