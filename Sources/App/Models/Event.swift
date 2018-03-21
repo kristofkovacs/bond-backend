@@ -99,9 +99,14 @@ extension Event: JSONConvertible {
     
 }
 
-
-
 extension Event: ResponseRepresentable {
     
+}
+
+extension Event: Updateable {
+    
+    public static var updateableKeys: [UpdateableKey<Event>] {
+        return [] // TODO: -
+    }
 }
 
