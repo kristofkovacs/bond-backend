@@ -1,6 +1,7 @@
 import FluentProvider
 
 final class TagController: ResourceRepresentable {
+    
     func index(_ req: Request) throws -> ResponseRepresentable {
         return try Tag.all().makeJSON()
     }

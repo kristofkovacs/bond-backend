@@ -1,21 +1,19 @@
 import FluentProvider
 
-protocol Controller {
-    func addRoutes(to drop: Droplet)
-    func create(_ req: Request) throws -> ResponseRepresentable
-    func all(_ req: Request) throws -> ResponseRepresentable
-    func get(_ req: Request) throws -> ResponseRepresentable
-}
-
-
 final class ActivityController: ResourceRepresentable {
+    
     func index(_ req: Request) throws -> ResponseRepresentable {
         return try Activity.all().makeJSON()
     }
     
-    func makeResource() -> Resource<Post> {
+    func show(_ req: Request, activity: Activity) throws -> ResponseRepresentable {
+        return activity
+    }
+    
+    func makeResource() -> Resource<Activity> {
         return Resource(
-            index: index
+            index: index,
+            show:show
         )
     }
 }
