@@ -40,6 +40,7 @@ extension Conversation: Preparation {
 
 extension Conversation: JSONConvertible {
     convenience init(json: JSON) throws {
+        // TODO: - init from JSON !!
         self.init()
     }
     

@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/vapor/engine.git",
         "state": {
           "branch": null,
-          "revision": "c8072bcad951523adda26798e9b5c56a5c54d191",
-          "version": "2.2.3"
+          "revision": "0ecc50fa8c7bc03ec9af78ca37e3b57f192bd258",
+          "version": "2.2.4"
         }
       },
       {
@@ -168,8 +168,8 @@
         "repositoryURL": "https://github.com/vapor/multipart.git",
         "state": {
           "branch": null,
-          "revision": "8e541b2e6fc64a3741eca2aa48ee2c3f23cbe17c",
-          "version": "2.1.1"
+          "revision": "17c2bf072ae1698aa7d6c96472ff9b4a970c1816",
+          "version": "2.2.0"
         }
       },
       {
