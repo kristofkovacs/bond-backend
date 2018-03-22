@@ -52,6 +52,7 @@ extension Droplet {
             builder.delete(String.parameter, handler: conversationController.removeMessage)
         }
         
+        try resource("conversations", ConversationController.self)
         
         // TODO: - others
     }

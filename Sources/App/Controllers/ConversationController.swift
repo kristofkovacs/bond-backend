@@ -1,6 +1,5 @@
 import FluentProvider
 
-
 final class ConversationController: ResourceRepresentable {
     
     func show(_ req: Request, conversation: Conversation) throws -> ResponseRepresentable {
@@ -26,6 +25,8 @@ final class ConversationController: ResourceRepresentable {
     }
     
 }
+
+extension ConversationController: EmptyInitializable { }
 
 extension Request {
     func conversation() throws -> Conversation {
