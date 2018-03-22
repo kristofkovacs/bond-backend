@@ -12,6 +12,10 @@ final class UserController: ResourceRepresentable {
         return user.createdResponse
     }
     
+    func show(_ req: Request, user: User) throws -> ResponseRepresentable {
+        return user
+    }
+    
     func delete(_ req: Request, user: User) throws -> ResponseRepresentable {
         try user.delete()
         return Response(status: .ok)
@@ -27,6 +31,7 @@ final class UserController: ResourceRepresentable {
         return Resource(
             index: index,
             store: store,
+            show: show,
             update: update,
             destroy: delete
         )
