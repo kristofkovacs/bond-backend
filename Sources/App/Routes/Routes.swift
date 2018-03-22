@@ -54,6 +54,9 @@ extension Droplet {
         
         try resource("conversations", ConversationController.self)
         
+        // MARK: - Locations
+        try resource("locations", LocationController.self)
+        
         // TODO: - others
     }
 }
