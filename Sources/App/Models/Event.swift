@@ -99,9 +99,7 @@ extension Event: JSONConvertible {
     
 }
 
-extension Event: ResponseRepresentable {
-    
-}
+extension Event: ResponseRepresentable { }
 
 extension Event: Updateable {
     

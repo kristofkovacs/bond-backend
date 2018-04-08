@@ -24,10 +24,38 @@ extension Droplet {
         }
         
         group("events", Event.parameter, "conversations") { interested in
-            interested.post(handler: eventController.createConveration)
+            interested.post(handler: eventController.createConversation)
         }
         
         try resource("events", EventController.self)
+        
+        // MARK: - Users
+        let userController = UserController()
+        
+        group("users", User.parameter, "locations") { user in
+            user.post(handler: userController.addLocation)
+            user.delete(String.parameter, handler: userController.removeLocation)
+        }
+        
+        group("users", User.parameter, "activities") { user in
+            user.post(handler: userController.addActivity)
+            user.delete(String.parameter, handler: userController.removeActivity)
+        }
+        
+        try resource("users", UserController.self)
+        
+        // MARK: - Conversations
+        let conversationController = ConversationController()
+        
+        group("conversations", Conversation.parameter, "messages") { builder in
+            builder.post(handler: conversationController.addMessage)
+            builder.delete(String.parameter, handler: conversationController.removeMessage)
+        }
+        
+        try resource("conversations", ConversationController.self)
+        
+        // MARK: - Locations
+        try resource("locations", LocationController.self)
         
         // TODO: - others
     }

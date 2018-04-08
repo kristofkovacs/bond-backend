@@ -55,9 +55,19 @@ extension User: JSONRepresentable {
         try json.set(Keys.profilePic, profilePic)
         return json
     }
+    
+    convenience init(json: JSON) throws {
+        try self.init(name: try json.get(Keys.name),
+                      profilePic: try json.get(Keys.profilePic))
+    }
 }
 
 extension User: ResponseRepresentable { }
 
-
+extension User: Updateable {
+    
+    public static var updateableKeys: [UpdateableKey<User>] {
+        return [] // TODO: -
+    }
+}
 

@@ -95,7 +95,7 @@ extension EventController {
         throw Abort(.notImplemented, reason: "Should remove \(userId) from \(event.description) going")
     }
     
-    func createConveration(_ req: Request) throws -> ResponseRepresentable {
+    func createConversation(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
         throw Abort(.notImplemented, reason: "Should create a conversation for \(event.description)")
     }
