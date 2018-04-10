@@ -9,6 +9,7 @@ final class Tag: Model {
     struct Keys {
         static let _id = "_id"
         static let name = "name"
+        static let activities = "activities"
     }
     
     init(name: String) {
@@ -52,6 +53,16 @@ extension Tag: JSONConvertible {
     }
     
     func makeJSON() throws -> JSON {
+        var json = JSON()
+        if let id: Identifier = self.id {
+            try json.set(Keys._id, id)
+        }
+        try json.set(Keys.name, name)
+        try json.set(Keys.activities, try activities.all().flatMap({ try $0.makeSiblingJSON() }))
+        return json
+    }
+    
+    func makeSiblingJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
             try json.set(Keys._id, id)

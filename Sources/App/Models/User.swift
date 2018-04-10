@@ -4,7 +4,7 @@ final class User: Model {
     let storage = Storage()
     
     var name: String
-    var profilePic: String
+    var profilePic: String?
     
     struct Keys {
         static let _id = "_id"
@@ -12,7 +12,7 @@ final class User: Model {
         static let profilePic = "profilePic"
     }
     
-    init(name: String, profilePic: String) {
+    init(name: String, profilePic: String?) {
         self.name = name
         self.profilePic = profilePic
     }
@@ -57,7 +57,7 @@ extension User: JSONRepresentable {
     }
     
     convenience init(json: JSON) throws {
-        try self.init(name: try json.get(Keys.name),
+        self.init(name: try json.get(Keys.name),
                       profilePic: try json.get(Keys.profilePic))
     }
 }

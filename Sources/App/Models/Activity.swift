@@ -11,6 +11,7 @@ final class Activity: Model {
         static let _id = "_id"
         static let name = "name"
         static let thumbnail = "thumbnail"
+        static let tags = "tags"
     }
     
     init(name: String, thumbnail: String?) {
@@ -59,6 +60,17 @@ extension Activity: JSONConvertible {
     }
     
     func makeJSON() throws -> JSON {
+        var json = JSON()
+        if let id: Identifier = self.id {
+            try json.set(Keys._id, id)
+        }
+        try json.set(Keys.name, name)
+        try json.set(Keys.thumbnail, thumbnail)
+        try json.set(Keys.tags, try tags.all().flatMap({ try $0.makeSiblingJSON() }))
+        return json
+    }
+    
+    func makeSiblingJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
             try json.set(Keys._id, id)

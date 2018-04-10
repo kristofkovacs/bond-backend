@@ -10,12 +10,47 @@ final class ActivityController: ResourceRepresentable {
         return activity
     }
     
+    func store(_ req: Request) throws -> ResponseRepresentable {
+        guard let json = req.json else {
+            throw Abort.badRequest
+        }
+        let activity = try Activity(json: json)
+        try activity.save()
+        
+        if let tags = json["tags"]?.array {
+            for tagJSON in tags {
+                if let tag = try Tag.find(tagJSON["id"]) {
+                    try activity.tags.add(tag)
+                }
+            }
+        }
+        return activity
+    }
+    
+    func update(_ req: Request, activity: Activity) throws -> ResponseRepresentable {
+        guard let json = req.json else {
+            throw Abort.badRequest
+        }
+        
+        if let tags = json["tags"]?.array {
+            for tagJSON in tags {
+                if let tag = try Tag.find(tagJSON["id"]) {
+                    try activity.tags.add(tag)
+                }
+            }
+        }
+        return activity
+    }
+    
     func makeResource() -> Resource<Activity> {
         return Resource(
             index: index,
-            show:show
+            store: store,
+            show: show,
+            update: update
         )
     }
+    
 }
 
 extension Request {

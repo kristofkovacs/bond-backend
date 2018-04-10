@@ -23,9 +23,11 @@ extension Config {
         preparations.append(Conversation.self)
         preparations.append(Event.self)
         preparations.append(Message.self)
-        preparations.append(Post.self)
         preparations.append(Tag.self)
         preparations.append(User.self)
         preparations.append(Location.self)
+        preparations.append(Pivot<Tag, Activity>.self)
+        preparations.append(Pivot<Activity, Tag>.self)
+
     }
 }

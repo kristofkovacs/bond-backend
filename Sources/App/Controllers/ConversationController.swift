@@ -2,6 +2,10 @@ import FluentProvider
 
 final class ConversationController: ResourceRepresentable {
     
+    func index(_ req: Request) throws -> ResponseRepresentable {
+        return try Conversation.all().makeJSON()
+    }
+    
     func show(_ req: Request, conversation: Conversation) throws -> ResponseRepresentable {
         return conversation
     }
@@ -19,6 +23,7 @@ final class ConversationController: ResourceRepresentable {
     
     func makeResource() -> Resource<Conversation> {
         return Resource(
+            index: index,
             store: store,
             show: show,
             destroy: delete)
@@ -40,7 +45,9 @@ extension ConversationController {
         let conversation = try req.parameters.next(Conversation.self)
         guard let json = req.json else { throw Abort.badRequest }
         let message = try Message(json: json)
-        throw Abort(.notImplemented, reason: "Should add \(message.content) to \(conversation.id?.string ?? "")")
+        try conversation.messages.save(message)
+        return conversation
+//        throw Abort(.notImplemented, reason: "Should add \(message.content) to \(conversation.id?.string ?? "")")
     }
     
     func removeMessage(_ req: Request) throws -> ResponseRepresentable {
