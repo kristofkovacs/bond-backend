@@ -72,6 +72,7 @@ extension Activity: JSONConvertible {
     
     func makeSiblingJSON() throws -> JSON {
         var json = JSON()
+        
         if let id: Identifier = self.id {
             try json.set(Keys._id, id)
         }

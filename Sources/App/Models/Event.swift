@@ -11,6 +11,8 @@ final class Event: Model {
     var description: String
     var isPrivate: Bool = false
     
+    var activityId: Identifier?
+    
     struct Keys {
         static let id = "_id"
         static let creator = "creator"
@@ -20,9 +22,10 @@ final class Event: Model {
         static let endDate = "endDate"
         static let description = "description"
         static let isPrivate = "isPrivate"
+        static let activityId = "activityId"
     }
     
-    init(from json: JSON) throws {
+    init(from json: JSON, activity: Activity) throws {
         creator = try json.get(Keys.creator)
         minCount = try json.get(Keys.minCount)
         maxCount = try json.get(Keys.maxCount)
@@ -30,6 +33,7 @@ final class Event: Model {
         endDate = try json.get(Keys.endDate)
         description = try json.get(Keys.description)
         isPrivate = try json.get(Keys.isPrivate)
+        activityId = activity.id
     }
     
     init(row: Row) throws {
@@ -40,6 +44,7 @@ final class Event: Model {
         endDate = try row.get(Keys.endDate)
         description = try row.get(Keys.description)
         isPrivate = try row.get(Keys.isPrivate)
+        activityId = try row.get(Activity.foreignIdKey)
     }
     
     func makeRow() throws -> Row {
@@ -50,7 +55,8 @@ final class Event: Model {
         try row.set(Keys.startDate, startDate)
         try row.set(Keys.endDate, endDate)
         try row.set(Keys.description, description)
-        try row.set(Keys.isPrivate, description)
+        try row.set(Keys.isPrivate, isPrivate)
+        try row.set(Activity.foreignIdKey, activityId)
         return row
     }
     
@@ -67,6 +73,7 @@ extension Event: Preparation {
             builder.string(Keys.endDate)
             builder.string(Keys.description)
             builder.bool(Keys.isPrivate)
+            builder.parent(Activity.self)
         }
     }
     
@@ -89,14 +96,24 @@ extension Event: JSONConvertible {
         try json.set(Keys.endDate, endDate)
         try json.set(Keys.description, description)
         try json.set(Keys.isPrivate, isPrivate)
+        try json.set(Keys.activityId, try activity.get()?.id)
         return json
     }
     
     convenience init(json: JSON) throws {
-        try self.init(from: json)
+        let activityId: Identifier = try json.get("activityId")
+        guard let activity = try Activity.find(activityId) else {
+            throw Abort.badRequest
+        }
+        try self.init(from: json, activity: activity)
     }
     
-    
+}
+
+extension Event {
+    var activity: Parent<Event, Activity> {
+        return parent(id: activityId)
+    }
 }
 
 extension Event: ResponseRepresentable { }
