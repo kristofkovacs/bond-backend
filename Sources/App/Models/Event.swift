@@ -7,10 +7,10 @@ final class Event: Model {
     var minCount: Int
     var maxCount: Int
     var startDate: String
-    var endDate: String
+    var endDate: String?
     var latitude: Double?
     var longitude: Double?
-    var description: String
+    var description: String?
     var isPrivate: Bool = false
     
     var activityId: Identifier?
