@@ -10,6 +10,7 @@ final class User: Model {
         static let _id = "_id"
         static let name = "name"
         static let profilePic = "profilePic"
+        static let goings = "goings"
     }
     
     init(name: String, profilePic: String?) {
@@ -29,6 +30,10 @@ final class User: Model {
         return row
     }
     
+    var goings: Siblings<User, Event, Pivot<User, Event>> {
+        return siblings()
+    }
+    
 }
 
 extension User: Preparation {
@@ -45,7 +50,7 @@ extension User: Preparation {
     }
 }
 
-extension User: JSONRepresentable {
+extension User: JSONConvertible {
     func makeJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
@@ -53,6 +58,7 @@ extension User: JSONRepresentable {
         }
         try json.set(Keys.name, name)
         try json.set(Keys.profilePic, profilePic)
+        try json.set(Keys.goings, try goings.all().flatMap({ $0.id }))
         return json
     }
     

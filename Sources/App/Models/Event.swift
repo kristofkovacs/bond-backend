@@ -8,6 +8,8 @@ final class Event: Model {
     var maxCount: Int
     var startDate: String
     var endDate: String
+    var latitude: Double?
+    var longitude: Double?
     var description: String
     var isPrivate: Bool = false
     
@@ -20,9 +22,12 @@ final class Event: Model {
         static let maxCount = "maxCount"
         static let startDate = "startDate"
         static let endDate = "endDate"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
         static let description = "description"
         static let isPrivate = "isPrivate"
         static let activityId = "activityId"
+        static let goings = "goings"
     }
     
     init(from json: JSON, activity: Activity) throws {
@@ -31,6 +36,8 @@ final class Event: Model {
         maxCount = try json.get(Keys.maxCount)
         startDate = try json.get(Keys.startDate)
         endDate = try json.get(Keys.endDate)
+        latitude = try json.get(Keys.latitude)
+        longitude = try json.get(Keys.longitude)
         description = try json.get(Keys.description)
         isPrivate = try json.get(Keys.isPrivate)
         activityId = activity.id
@@ -42,6 +49,8 @@ final class Event: Model {
         maxCount = try row.get(Keys.maxCount)
         startDate = try row.get(Keys.startDate)
         endDate = try row.get(Keys.endDate)
+        latitude = try row.get(Keys.latitude)
+        longitude = try row.get(Keys.longitude)
         description = try row.get(Keys.description)
         isPrivate = try row.get(Keys.isPrivate)
         activityId = try row.get(Activity.foreignIdKey)
@@ -54,10 +63,16 @@ final class Event: Model {
         try row.set(Keys.maxCount, maxCount)
         try row.set(Keys.startDate, startDate)
         try row.set(Keys.endDate, endDate)
+        try row.set(Keys.latitude, latitude)
+        try row.set(Keys.longitude, longitude)
         try row.set(Keys.description, description)
         try row.set(Keys.isPrivate, isPrivate)
         try row.set(Activity.foreignIdKey, activityId)
         return row
+    }
+    
+    var usersGoing: Siblings<Event, User, Pivot<Event, User>> {
+        return siblings()
     }
     
 }
@@ -71,6 +86,8 @@ extension Event: Preparation {
             builder.int(Keys.maxCount)
             builder.string(Keys.startDate)
             builder.string(Keys.endDate)
+            builder.double(Keys.latitude)
+            builder.double(Keys.longitude)
             builder.string(Keys.description)
             builder.bool(Keys.isPrivate)
             builder.parent(Activity.self)
@@ -94,9 +111,12 @@ extension Event: JSONConvertible {
         try json.set(Keys.maxCount, maxCount)
         try json.set(Keys.startDate, startDate)
         try json.set(Keys.endDate, endDate)
+        try json.set(Keys.longitude, longitude)
+        try json.set(Keys.latitude, latitude)
         try json.set(Keys.description, description)
         try json.set(Keys.isPrivate, isPrivate)
         try json.set(Keys.activityId, try activity.get()?.id)
+        try json.set(Keys.goings, try usersGoing.all().flatMap({ $0.id }))
         return json
     }
     
@@ -107,6 +127,8 @@ extension Event: JSONConvertible {
         }
         try self.init(from: json, activity: activity)
     }
+    
+   
     
 }
 

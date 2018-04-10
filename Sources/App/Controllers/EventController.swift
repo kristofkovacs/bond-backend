@@ -32,6 +32,10 @@ final class EventController: ResourceRepresentable {
         return try Event.all().makeJSON()
     }
     
+    func show(_ req: Request, event: Event) throws -> ResponseRepresentable {
+        return event
+    }
+    
     func store(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.event()
         try event.save()
@@ -53,6 +57,7 @@ final class EventController: ResourceRepresentable {
         return Resource(
             index: index,
             store: store,
+            show: show,
             update: update,
             destroy: delete
         )
@@ -85,14 +90,18 @@ extension EventController {
     
     func addUserToGoing(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
-        guard let userId = req.data["id"]?.string else { throw Abort.badRequest }
-        throw Abort(.notImplemented, reason: "Should add \(userId) to \(event.description) going")
+        guard let userId = req.data["id"]?.string, let user = try User.find(userId) else { throw Abort.badRequest }
+        // TODO: check if already goes
+        try event.usersGoing.add(user)
+        return event
     }
     
     func removeUserFromGoing(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
         let userId = try req.parameters.next(String.self)
-        throw Abort(.notImplemented, reason: "Should remove \(userId) from \(event.description) going")
+        guard let user = try User.find(userId) else { throw Abort.badRequest }
+        try event.usersGoing.remove(user)
+        return event
     }
     
     func createConversation(_ req: Request) throws -> ResponseRepresentable {

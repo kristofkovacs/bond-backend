@@ -47,7 +47,6 @@ extension ConversationController {
         let message = try Message(json: json)
         try conversation.messages.save(message)
         return conversation
-//        throw Abort(.notImplemented, reason: "Should add \(message.content) to \(conversation.id?.string ?? "")")
     }
     
     func removeMessage(_ req: Request) throws -> ResponseRepresentable {
