@@ -20,10 +20,10 @@ before_install:
 script:
     - swift build
     - swift build -c release
-    - swift test
+    ##- swift test
 
-after_success:
-    - eval "$(curl -sL https://swift.vapor.sh/codecov)"
+##after_success:
+    ##- eval "$(curl -sL https://swift.vapor.sh/codecov)"
     
 notifications:
  slack:
