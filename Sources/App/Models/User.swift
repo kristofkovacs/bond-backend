@@ -7,7 +7,7 @@ final class User: Model {
     var profilePic: String?
     
     struct Keys {
-        static let id = "_id"
+        static let id = "id"
         static let name = "name"
         static let profilePic = "profilePic"
         static let goings = "goings"

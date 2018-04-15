@@ -8,7 +8,7 @@ final class Activity: Model {
     var thumbnail: String?
     
     struct Keys {
-        static let id = "_id"
+        static let id = "id"
         static let name = "name"
         static let thumbnail = "thumbnail"
         static let tags = "tags"

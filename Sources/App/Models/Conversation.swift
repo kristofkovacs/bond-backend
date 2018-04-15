@@ -15,7 +15,7 @@ final class Conversation: Model {
     let storage = Storage()
     
     struct Keys {
-        static let id = "_id"
+        static let id = "id"
         static let messages = "messages"
     }
 }

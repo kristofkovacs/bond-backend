@@ -7,7 +7,7 @@ final class Tag: Model {
     var name: String
     
     struct Keys {
-        static let id = "_id"
+        static let id = "id"
         static let name = "name"
         static let activities = "activities"
     }

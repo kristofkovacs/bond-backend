@@ -12,7 +12,7 @@ final class Message: Model {
     var conversationId: Identifier?
     
     struct Keys {
-        static let id = "_id"
+        static let id = "id"
         static let conversationId = "conversationId"
         static let senderId = "senderId"
         static let recipientId = "recipientId"
