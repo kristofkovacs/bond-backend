@@ -72,8 +72,7 @@ extension UserController {
     
     func removeActivity(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.parameters.next(User.self)
-        guard let activityId = req.data["id"]?.string else { throw Abort.badRequest }
-        guard let activity = try Activity.find(activityId) else { throw Abort.notFound }
+        let activity = try req.parameters.next(Activity.self)
         guard try user.activities.isAttached(activity) else { throw Abort.badRequest }
         
         try user.activities.remove(activity)
