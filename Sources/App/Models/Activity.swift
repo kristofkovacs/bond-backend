@@ -31,6 +31,10 @@ final class Activity: Model {
         return row
     }
     
+    var users: Siblings<Activity, User, Pivot<Activity, User>> {
+        return siblings()
+    }
+    
 }
 
 extension Activity {

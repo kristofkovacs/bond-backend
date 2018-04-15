@@ -31,8 +31,8 @@ final class User: Model {
         return row
     }
     
-    var activities: Children<User, Activity> {
-        return children()
+    var activities: Siblings<User, Activity, Pivot<User, Activity>> {
+        return siblings()
     }
     
     var goings: Siblings<User, Event, Pivot<User, Event>> {

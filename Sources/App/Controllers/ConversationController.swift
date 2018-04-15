@@ -46,7 +46,8 @@ extension ConversationController {
         guard let json = req.json else { throw Abort.badRequest }
         let message = try Message(json: json)
         try conversation.messages.save(message)
-        return conversation
+        // TODO: Should we return the conversation? or just the message?
+        return try conversation.makeJSON()
     }
     
     func removeMessage(_ req: Request) throws -> ResponseRepresentable {

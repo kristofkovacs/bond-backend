@@ -63,13 +63,21 @@ extension UserController {
     func addActivity(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.parameters.next(User.self)
         guard let activityId = req.data["id"]?.string else { throw Abort.badRequest }
-        throw Abort(.notImplemented, reason: "Should add \(activityId) to \(user.name) as a new preferred activity.")
+        if let _ = try user.activities.find(activityId) { throw Abort(.conflict) }
+        guard let activity = try Activity.find(activityId) else { throw Abort(.notFound) }
+        
+        try user.activities.add(activity)
+        return Response(status: .ok)
     }
     
     func removeActivity(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.parameters.next(User.self)
         guard let activityId = req.data["id"]?.string else { throw Abort.badRequest }
-        throw Abort(.notImplemented, reason: "Should remove \(activityId) from \(user.name)'s preferred activities.")
+        guard let activity = try Activity.find(activityId) else { throw Abort.notFound }
+        guard try user.activities.isAttached(activity) else { throw Abort.badRequest }
+        
+        try user.activities.remove(activity)
+        return Response(status: .ok)
     }
 }
 

@@ -95,7 +95,7 @@ extension EventController {
             throw Abort(.conflict)
         }
         try event.usersGoing.add(user)
-        return event
+        return Response(status: .ok)
     }
     
     func removeUserFromGoing(_ req: Request) throws -> ResponseRepresentable {
@@ -103,7 +103,7 @@ extension EventController {
         let userId = try req.parameters.next(String.self)
         guard let user = try User.find(userId) else { throw Abort.badRequest }
         try event.usersGoing.remove(user)
-        return event
+        return Response(status: .ok)
     }
     
     func createConversation(_ req: Request) throws -> ResponseRepresentable {
