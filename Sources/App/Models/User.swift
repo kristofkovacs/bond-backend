@@ -7,7 +7,7 @@ final class User: Model {
     var profilePic: String?
     
     struct Keys {
-        static let _id = "_id"
+        static let id = "_id"
         static let name = "name"
         static let profilePic = "profilePic"
         static let goings = "goings"
@@ -54,7 +54,7 @@ extension User: JSONConvertible {
     func makeJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
-            try json.set(Keys._id, id)
+            try json.set(Keys.id, id)
         }
         try json.set(Keys.name, name)
         try json.set(Keys.profilePic, profilePic)
