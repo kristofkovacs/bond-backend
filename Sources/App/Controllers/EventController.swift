@@ -91,7 +91,9 @@ extension EventController {
     func addUserToGoing(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
         guard let userId = req.data["id"]?.string, let user = try User.find(userId) else { throw Abort.badRequest }
-        // TODO: check if already goes
+        if let _ = try event.usersGoing.find(userId) {
+            throw Abort(.conflict)
+        }
         try event.usersGoing.add(user)
         return event
     }

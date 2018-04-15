@@ -11,6 +11,7 @@ final class User: Model {
         static let name = "name"
         static let profilePic = "profilePic"
         static let goings = "goings"
+        static let activities = "activities"
     }
     
     init(name: String, profilePic: String?) {
@@ -28,6 +29,10 @@ final class User: Model {
         try row.set(Keys.name, name)
         try row.set(Keys.profilePic, profilePic)
         return row
+    }
+    
+    var activities: Children<User, Activity> {
+        return children()
     }
     
     var goings: Siblings<User, Event, Pivot<User, Event>> {
@@ -59,6 +64,7 @@ extension User: JSONConvertible {
         try json.set(Keys.name, name)
         try json.set(Keys.profilePic, profilePic)
         try json.set(Keys.goings, try goings.all().flatMap({ $0.id }))
+        try json.set(Keys.activities, try activities.all().flatMap({ $0.id }))
         return json
     }
     
