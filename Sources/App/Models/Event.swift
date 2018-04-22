@@ -10,6 +10,7 @@ final class Event: Model {
     var endDate: String?
     var latitude: Double?
     var longitude: Double?
+    var location: String?
     var description: String?
     var isPrivate: Bool = false
     
@@ -24,6 +25,7 @@ final class Event: Model {
         static let endDate = "endDate"
         static let latitude = "latitude"
         static let longitude = "longitude"
+        static let location = "location"
         static let description = "description"
         static let isPrivate = "isPrivate"
         static let activityId = "activityId"
@@ -39,6 +41,7 @@ final class Event: Model {
         endDate = try json.get(Keys.endDate)
         latitude = try json.get(Keys.latitude)
         longitude = try json.get(Keys.longitude)
+        location = try json.get(Keys.location)
         description = try json.get(Keys.description)
         isPrivate = try json.get(Keys.isPrivate)
         activityId = activity.id
@@ -52,6 +55,7 @@ final class Event: Model {
         endDate = try row.get(Keys.endDate)
         latitude = try row.get(Keys.latitude)
         longitude = try row.get(Keys.longitude)
+        location = try row.get(Keys.longitude)
         description = try row.get(Keys.description)
         isPrivate = try row.get(Keys.isPrivate)
         activityId = try row.get(Activity.foreignIdKey)
@@ -66,6 +70,7 @@ final class Event: Model {
         try row.set(Keys.endDate, endDate)
         try row.set(Keys.latitude, latitude)
         try row.set(Keys.longitude, longitude)
+        try row.set(Keys.location, location)
         try row.set(Keys.description, description)
         try row.set(Keys.isPrivate, isPrivate)
         try row.set(Activity.foreignIdKey, activityId)
@@ -89,6 +94,7 @@ extension Event: Preparation {
             builder.string(Keys.endDate)
             builder.double(Keys.latitude)
             builder.double(Keys.longitude)
+            builder.string(Keys.location)
             builder.string(Keys.description)
             builder.bool(Keys.isPrivate)
             builder.parent(Activity.self)
@@ -114,6 +120,7 @@ extension Event: JSONConvertible {
         try json.set(Keys.endDate, endDate)
         try json.set(Keys.longitude, longitude)
         try json.set(Keys.latitude, latitude)
+        try json.set(Keys.location, location)
         try json.set(Keys.description, description)
         try json.set(Keys.isPrivate, isPrivate)
         try json.set(Keys.activityId, try activity.get()?.id)
