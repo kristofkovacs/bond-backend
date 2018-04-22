@@ -49,6 +49,7 @@ extension Droplet {
         
         group("conversations", Conversation.parameter, "messages") { builder in
             builder.post(handler: conversationController.addMessage)
+            // TODO: remove from swagger
             builder.delete(Message.parameter, handler: conversationController.removeMessage)
         }
         

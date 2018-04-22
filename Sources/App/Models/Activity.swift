@@ -70,7 +70,7 @@ extension Activity: JSONConvertible {
         }
         try json.set(Keys.name, name)
         try json.set(Keys.thumbnail, thumbnail)
-        try json.set(Keys.tags, try tags.all().flatMap({ try $0.makeSiblingJSON() }))
+        try json.set(Keys.tags, try tags.all().compactMap { try $0.makeSiblingJSON() } )
         return json
     }
     

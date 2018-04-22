@@ -58,7 +58,7 @@ extension Tag: JSONConvertible {
             try json.set(Keys.id, id)
         }
         try json.set(Keys.name, name)
-        try json.set(Keys.activities, try activities.all().flatMap({ try $0.makeSiblingJSON() }))
+        try json.set(Keys.activities, try activities.all().compactMap { try $0.makeSiblingJSON() } )
         return json
     }
     

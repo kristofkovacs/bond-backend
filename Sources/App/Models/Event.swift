@@ -125,7 +125,7 @@ extension Event: JSONConvertible {
         try json.set(Keys.isPrivate, isPrivate)
         try json.set(Keys.activityId, try activity.get()?.id)
         try json.set(Keys.activityName, try activity.get()?.name)
-        try json.set(Keys.goings, try usersGoing.all().flatMap({ $0.id }))
+        try json.set(Keys.goings, try usersGoing.all().compactMap { $0.id } )
         
         return json
     }
