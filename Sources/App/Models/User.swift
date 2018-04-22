@@ -63,8 +63,8 @@ extension User: JSONConvertible {
         }
         try json.set(Keys.name, name)
         try json.set(Keys.profilePic, profilePic)
-        try json.set(Keys.goings, try goings.all().compactMap { $0.id } )
-        try json.set(Keys.activities, try activities.all().compactMap { $0.id } )
+        try json.set(Keys.goings, try goings.all().flatMap { $0.id } )
+        try json.set(Keys.activities, try activities.all().flatMap { $0.id } )
         return json
     }
     
