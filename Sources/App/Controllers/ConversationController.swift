@@ -50,11 +50,5 @@ extension ConversationController {
         return try conversation.makeJSON()
     }
     
-    func removeMessage(_ req: Request) throws -> ResponseRepresentable {
-        let conversation = try req.parameters.next(Conversation.self)
-        guard let json = req.json else { throw Abort.badRequest }
-        let message = try Message(json: json)
-        throw Abort(.notImplemented, reason: "Should delete \(message.content) from \(conversation.id?.string ?? "")")
-    }
 }
 
