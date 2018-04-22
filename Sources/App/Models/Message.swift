@@ -12,7 +12,7 @@ final class Message: Model {
     var conversationId: Identifier?
     
     struct Keys {
-        static let _id = "_id"
+        static let id = "id"
         static let conversationId = "conversationId"
         static let senderId = "senderId"
         static let recipientId = "recipientId"
@@ -87,7 +87,7 @@ extension Message: JSONConvertible {
     func makeJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
-            try json.set(Keys._id, id)
+            try json.set(Keys.id, id)
         }
         try json.set(Keys.senderId, senderId)
         try json.set(Keys.recipientId, recipientId)

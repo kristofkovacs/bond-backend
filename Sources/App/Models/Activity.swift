@@ -8,7 +8,7 @@ final class Activity: Model {
     var thumbnail: String?
     
     struct Keys {
-        static let _id = "_id"
+        static let id = "id"
         static let name = "name"
         static let thumbnail = "thumbnail"
         static let tags = "tags"
@@ -29,6 +29,10 @@ final class Activity: Model {
         try row.set(Activity.Keys.name, name)
         try row.set(Activity.Keys.thumbnail, thumbnail)
         return row
+    }
+    
+    var users: Siblings<Activity, User, Pivot<Activity, User>> {
+        return siblings()
     }
     
 }
@@ -62,7 +66,7 @@ extension Activity: JSONConvertible {
     func makeJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
-            try json.set(Keys._id, id)
+            try json.set(Keys.id, id)
         }
         try json.set(Keys.name, name)
         try json.set(Keys.thumbnail, thumbnail)
@@ -74,7 +78,7 @@ extension Activity: JSONConvertible {
         var json = JSON()
         
         if let id: Identifier = self.id {
-            try json.set(Keys._id, id)
+            try json.set(Keys.id, id)
         }
         try json.set(Keys.name, name)
         try json.set(Keys.thumbnail, thumbnail)

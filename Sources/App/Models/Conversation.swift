@@ -15,7 +15,7 @@ final class Conversation: Model {
     let storage = Storage()
     
     struct Keys {
-        static let _id = "_id"
+        static let id = "id"
         static let messages = "messages"
     }
 }
@@ -47,7 +47,7 @@ extension Conversation: JSONConvertible {
     func makeJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
-            try json.set(Keys._id, id)
+            try json.set(Keys.id, id)
         }
         try json.set(Keys.messages, try messages.all().makeJSON())
         return json

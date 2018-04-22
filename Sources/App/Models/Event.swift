@@ -16,7 +16,7 @@ final class Event: Model {
     var activityId: Identifier?
     
     struct Keys {
-        static let id = "_id"
+        static let id = "id"
         static let creator = "creator"
         static let minCount = "minCount"
         static let maxCount = "maxCount"
