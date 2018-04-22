@@ -25,7 +25,7 @@ final class Event: Model {
         static let endDate = "endDate"
         static let latitude = "latitude"
         static let longitude = "longitude"
-        static let location = "location"
+        static let location = "location" 
         static let description = "description"
         static let isPrivate = "isPrivate"
         static let activityId = "activityId"
@@ -55,7 +55,7 @@ final class Event: Model {
         endDate = try row.get(Keys.endDate)
         latitude = try row.get(Keys.latitude)
         longitude = try row.get(Keys.longitude)
-        location = try row.get(Keys.longitude)
+        location = try row.get(Keys.location)
         description = try row.get(Keys.description)
         isPrivate = try row.get(Keys.isPrivate)
         activityId = try row.get(Activity.foreignIdKey)
