@@ -29,7 +29,7 @@ extension Storable {
 final class EventController: ResourceRepresentable {
     
     func index(_ req: Request) throws -> ResponseRepresentable {
-        return try Event.all().makeJSON()
+        return try Event.all().sorted(by: { $0.startDate < $1.startDate } ).makeJSON()
     }
     
     func show(_ req: Request, event: Event) throws -> ResponseRepresentable {
