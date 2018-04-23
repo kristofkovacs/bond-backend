@@ -38,7 +38,6 @@ final class User: Model {
     var goings: Siblings<User, Event, Pivot<User, Event>> {
         return siblings()
     }
-    
 }
 
 extension User: Preparation {
@@ -80,6 +79,14 @@ extension User: Updateable {
     
     public static var updateableKeys: [UpdateableKey<User>] {
         return [] // TODO: -
+    }
+}
+
+extension User: Equatable {
+    
+    //TODO: - make it based on ID, why is there no ID?
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.name == rhs.name
     }
 }
 

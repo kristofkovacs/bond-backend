@@ -56,6 +56,7 @@ extension Droplet {
         // MARK: - Locations
         try resource("locations", LocationController.self)
         
-        // TODO: - others
+        // MARK: - Session
+        try resource("session", SessionController.self)
     }
 }
