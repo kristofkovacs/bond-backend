@@ -3,33 +3,11 @@ import FluentProvider
 final class User: Model {
     let storage = Storage()
     
-    var name: String
+    var name: String?
     var profilePic: String?
     
-    struct Keys {
-        static let id = "id"
-        static let name = "name"
-        static let profilePic = "profilePic"
-        static let goings = "goings"
-        static let activities = "activities"
-    }
-    
-    init(name: String, profilePic: String?) {
-        self.name = name
-        self.profilePic = profilePic
-    }
-    
-    init(row: Row) throws {
-        name = try row.get(Keys.name)
-        profilePic = try row.get(Keys.profilePic)
-    }
-    
-    func makeRow() throws -> Row {
-        var row = Row()
-        try row.set(Keys.name, name)
-        try row.set(Keys.profilePic, profilePic)
-        return row
-    }
+    var userName: String
+    var password: String // TODO: - hash later
     
     var activities: Siblings<User, Activity, Pivot<User, Activity>> {
         return siblings()
@@ -37,6 +15,39 @@ final class User: Model {
     
     var goings: Siblings<User, Event, Pivot<User, Event>> {
         return siblings()
+    }
+    
+    struct Keys {
+        static let id = "id"
+        static let name = "name"
+        static let profilePic = "profilePic"
+        static let goings = "goings"
+        static let activities = "activities"
+        static let userName = "userName"
+        static let password = "password"
+    }
+    
+    init(name: String?, profilePic: String?, userName: String, password: String) {
+        self.name = name
+        self.profilePic = profilePic
+        self.userName = userName
+        self.password = password
+    }
+    
+    init(row: Row) throws {
+        name = try row.get(Keys.name)
+        profilePic = try row.get(Keys.profilePic)
+        userName = try row.get(Keys.userName)
+        password = try row.get(Keys.password)
+    }
+    
+    func makeRow() throws -> Row {
+        var row = Row()
+        try row.set(Keys.name, name)
+        try row.set(Keys.profilePic, profilePic)
+        try row.set(Keys.userName, userName)
+        try row.set(Keys.password, password)
+        return row
     }
 }
 
@@ -46,6 +57,8 @@ extension User: Preparation {
             builder.id()
             builder.string(Keys.name)
             builder.string(Keys.profilePic)
+            builder.string(Keys.userName)
+            builder.string(Keys.password)
         }
     }
     
@@ -55,11 +68,13 @@ extension User: Preparation {
 }
 
 extension User: JSONConvertible {
+    
     func makeJSON() throws -> JSON {
         var json = JSON()
         if let id: Identifier = self.id {
             try json.set(Keys.id, id)
         }
+        try json.set(Keys.userName, userName)
         try json.set(Keys.name, name)
         try json.set(Keys.profilePic, profilePic)
         try json.set(Keys.goings, try goings.all().flatMap { $0.id } )
@@ -69,7 +84,9 @@ extension User: JSONConvertible {
     
     convenience init(json: JSON) throws {
         self.init(name: try json.get(Keys.name),
-                      profilePic: try json.get(Keys.profilePic))
+                  profilePic: try json.get(Keys.profilePic),
+                  userName: try json.get(Keys.userName),
+                  password: try json.get(Keys.password))
     }
 }
 
@@ -78,15 +95,27 @@ extension User: ResponseRepresentable { }
 extension User: Updateable {
     
     public static var updateableKeys: [UpdateableKey<User>] {
-        return [] // TODO: -
+        return [
+            UpdateableKey(Keys.profilePic, String.self) { user, picUrl in
+                user.profilePic = picUrl
+            },
+            UpdateableKey(Keys.name, String.self) { user, name in
+                user.name = name
+            },
+            UpdateableKey(Keys.userName, String.self) { user, userName in
+                user.userName = userName
+            },
+            UpdateableKey(Keys.password, String.self) { user, password in
+                user.password = password
+            }
+        ]
     }
 }
 
 extension User: Equatable {
     
-    //TODO: - make it based on ID, why is there no ID?
     static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.id == rhs.id
     }
 }
 

@@ -19,6 +19,14 @@ final class AuthMiddleware: Middleware {
     }
 }
 
+// TODO: - make configurable
+//extension AuthMiddleware: ConfigInitializable {
+//
+//    convenience init(config: Config) throws {
+//        let count = config["auth", "exclamationCount"]?.int ?? 3
+//    }
+//}
+
 // TODO: - encapsulate usage
 extension AuthMiddleware {
     
