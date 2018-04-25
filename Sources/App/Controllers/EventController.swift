@@ -7,25 +7,6 @@
 
 import FluentProvider
 
-///
-// TODO: - move somewhere else
-import HTTP
-
-extension Dictionary: BodyRepresentable {
-    
-    public func makeBody() -> Body {
-        return Body("self") // TODO: - make this work somehow pls
-    }
-}
-
-extension Storable {
-    
-    var createdResponse: Response {
-        return Response(status: .created, body: ["id": id])
-    }
-}
-///
-
 final class EventController: ResourceRepresentable {
     
     func index(_ req: Request) throws -> ResponseRepresentable {

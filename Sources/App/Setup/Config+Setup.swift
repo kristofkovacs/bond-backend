@@ -7,6 +7,7 @@ extension Config {
         // (add your own types here)
         Node.fuzzy = [Row.self, JSON.self, Node.self]
 
+        try setupMiddleware()
         try setupProviders()
         try setupPreparations()
     }
@@ -35,5 +36,9 @@ extension Config {
         
         preparations.append(Pivot<User, Activity>.self)
         preparations.append(Pivot<Activity, User>.self)
+    }
+    
+    private func setupMiddleware() throws {
+        addConfigurable(middleware: AuthMiddleware(), name: "auth" )
     }
 }
