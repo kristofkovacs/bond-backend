@@ -15,14 +15,18 @@ final class ProfileController {
     
     func addLocation(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.authStatus.authenticatedUser()
-        guard let locationId = req.data["id"]?.string else { throw Abort.badRequest }
-        throw Abort(.notImplemented, reason: "Should add \(locationId) to \(user.userName) as a new preferred location.")
+        guard let location = try Location.find(req.data["id"]?.string) else { throw Abort.badRequest }
+        
+        try user.locations.add(location)
+        return Response(status: .ok)
     }
     
     func removeLocation(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.authStatus.authenticatedUser()
-        guard let locationId = req.data["id"]?.string else { throw Abort.badRequest }
-        throw Abort(.notImplemented, reason: "Should remove \(locationId) from \(user.userName)'s preferred locations.")
+        guard let location = try Location.find(req.data["id"]?.string) else { throw Abort.badRequest }
+        
+        try user.locations.remove(location)
+        return Response(status: .ok)
     }
     
     func addActivity(_ req: Request) throws -> ResponseRepresentable {

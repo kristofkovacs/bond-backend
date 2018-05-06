@@ -31,6 +31,10 @@ final class Location: Model {
 //    var latitude: Double = 0.0
 //    var longitude: Double = 0.0
     
+    var relatedUsers: Siblings<Location, User, Pivot<Location, User>> {
+        return siblings()
+    }
+    
     struct Keys {
         static let id = "_id"
         static let name = "name"

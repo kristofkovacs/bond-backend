@@ -17,6 +17,10 @@ final class User: Model {
         return siblings()
     }
     
+    var locations: Siblings<User, Location, Pivot<User, Location>> {
+        return siblings()
+    }
+    
     struct Keys {
         static let id = "id"
         static let name = "name"
@@ -25,6 +29,7 @@ final class User: Model {
         static let activities = "activities"
         static let userName = "userName"
         static let password = "password"
+        static let locations = "locations"
     }
     
     init(name: String?, profilePic: String?, userName: String, password: String) {
@@ -79,6 +84,7 @@ extension User: JSONConvertible {
         try json.set(Keys.profilePic, profilePic)
         try json.set(Keys.goings, try goings.all().flatMap { $0.id } )
         try json.set(Keys.activities, try activities.all().flatMap { $0.id } )
+        try json.set(Keys.locations, try locations.all().flatMap( { $0.id }))
         return json
     }
     
