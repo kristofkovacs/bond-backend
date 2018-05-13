@@ -59,7 +59,9 @@ extension Location: JSONConvertible {
         if let id = self.id { try json.set(Keys.id, id) }
         try json.set(Keys.name, name)
         try json.set(Keys.description, description)
-        try json.set(Keys.coordinates, coordinates)
+        if let coordinates = coordinates {
+            try json.set(Keys.coordinates, try coordinates.makeJSON())
+        }
         return json
     }
     
