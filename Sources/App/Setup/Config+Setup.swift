@@ -27,6 +27,7 @@ extension Config {
         preparations.append(Tag.self)
         preparations.append(User.self)
         preparations.append(Location.self)
+        preparations.append(Coordinates.self)
         
         preparations.append(Pivot<Tag, Activity>.self)
         preparations.append(Pivot<Activity, Tag>.self)

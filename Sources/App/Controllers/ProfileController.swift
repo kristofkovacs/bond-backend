@@ -15,9 +15,14 @@ final class ProfileController {
     
     func addLocation(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.authStatus.authenticatedUser()
-        guard let location = try Location.find(req.data["id"]?.string) else { throw Abort.badRequest }
         
-        try user.locations.add(location)
+        try req.data["ids"]?.array?.forEach({ idNode in
+            guard let id = idNode.string else { throw Abort.badRequest }
+            if let _ = try user.locations.find(id) { throw Abort(.notModified) }
+            guard let location = try Location.find(id) else { throw Abort.notFound }
+            try user.locations.add(location)
+        })
+        
         return Response(status: .ok)
     }
     
@@ -31,8 +36,8 @@ final class ProfileController {
     
     func addActivity(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.authStatus.authenticatedUser()
-        guard let activityId = req.data["id"]?.string else { throw Abort.badRequest }
-        if let _ = try user.activities.find(activityId) { throw Abort(.conflict) }
+        guard let activityId = req.data["id"]?.string else { throw Abort.badRequest } //TODO: - make plural like location
+        if let _ = try user.activities.find(activityId) { throw Abort(.notModified) }
         guard let activity = try Activity.find(activityId) else { throw Abort(.notFound) }
         
         try user.activities.add(activity)
