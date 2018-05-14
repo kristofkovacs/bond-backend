@@ -29,4 +29,8 @@ notifications:
  slack:
    rooms:
      - bond-onlab:fNiYup7w9i7OgDrFuA3dZpE8#backend
+   template:
+    - "Build <%{build_url}|#%{build_number}> %{build_id} (<%{compare_url}|%{commit}>) of %{repository}:%{branch} by %{author} %{result} in %{duration}"
+    - "_%{commit_message}_"
+    - "https://www.youtube.com/watch?v=DFloZbT99oE"
  email: false
