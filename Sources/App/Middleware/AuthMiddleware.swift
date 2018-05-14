@@ -38,6 +38,7 @@ extension AuthMiddleware {
     }
     
     static func logout(_ request: Request) throws {
+        _  = try request.authStatus.authenticatedUser()
         guard let token = request.accessToken else { throw Abort(.unauthorized) }
         try sharedCache.delete(token)
     }

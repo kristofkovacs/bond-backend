@@ -7,8 +7,17 @@ extension Droplet {
         // MARK: - Activities
         try resource("activities", ActivityController.self)
         
-        // MARK: Tags
+        // MARK: - Tags
         try resource("tags", TagController.self)
+        
+        // MARK: - Locations
+        try resource("locations", LocationController.self)
+        
+        // MARK- Users
+        try resource("users", UserController.self)
+        
+        // MARK: - Session
+        try resource("session", SessionController.self)
         
         // MARK: - Events
         let eventController = EventController()
@@ -29,20 +38,23 @@ extension Droplet {
         
         try resource("events", EventController.self)
         
-        // MARK: - Users
-        let userController = UserController()
+        // MARK: - Profile
+        let profileController = ProfileController()
         
-        group("users", User.parameter, "locations") { user in
-            user.post(handler: userController.addLocation)
-            user.delete(Location.parameter, handler: userController.removeLocation)
+        group("me") { me in
+            
+            me.get(handler: profileController.showUser)
+            
+            me.group("locations") { locations in
+                locations.post(handler: profileController.addLocation)
+                locations.delete(Location.parameter, handler: profileController.removeLocation)
+            }
+        
+            me.group("activities") { activities in
+                activities.post(handler: profileController.addActivity)
+                activities.delete(Activity.parameter, handler: profileController.removeActivity)
+            }
         }
-        
-        group("users", User.parameter, "activities") { user in
-            user.post(handler: userController.addActivity)
-            user.delete(Activity.parameter, handler: userController.removeActivity)
-        }
-        
-        try resource("users", UserController.self)
         
         // MARK: - Conversations
         let conversationController = ConversationController()
@@ -52,11 +64,5 @@ extension Droplet {
         }
         
         try resource("conversations", ConversationController.self)
-        
-        // MARK: - Locations
-        try resource("locations", LocationController.self)
-        
-        // MARK: - Session
-        try resource("session", SessionController.self)
     }
 }

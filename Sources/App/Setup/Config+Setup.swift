@@ -27,6 +27,7 @@ extension Config {
         preparations.append(Tag.self)
         preparations.append(User.self)
         preparations.append(Location.self)
+        preparations.append(Coordinates.self)
         
         preparations.append(Pivot<Tag, Activity>.self)
         preparations.append(Pivot<Activity, Tag>.self)
@@ -36,6 +37,9 @@ extension Config {
         
         preparations.append(Pivot<User, Activity>.self)
         preparations.append(Pivot<Activity, User>.self)
+        
+        preparations.append(Pivot<Location, User>.self)
+        preparations.append(Pivot<User, Location>.self)
     }
     
     private func setupMiddleware() throws {
