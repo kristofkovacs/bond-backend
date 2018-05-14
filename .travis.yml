@@ -29,4 +29,7 @@ notifications:
  slack:
    rooms:
      - bond-onlab:fNiYup7w9i7OgDrFuA3dZpE8#backend
+   template:
+     - "https://www.youtube.com/watch?v=DFloZbT99oE"
+     - "%{result}"
  email: false
