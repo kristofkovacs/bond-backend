@@ -24,16 +24,16 @@ extension Droplet {
         
         group("events", Event.parameter, "interested") { interested in
             interested.post(handler: eventController.addUserToInterested)
-            interested.delete(User.parameter, handler: eventController.removeUserFromInterested)
+            interested.delete(handler: eventController.removeUserFromInterested)
         }
         
-        group("events", Event.parameter, "going") { interested in
-            interested.post(handler: eventController.addUserToGoing)
-            interested.delete(User.parameter, handler: eventController.removeUserFromGoing)
+        group("events", Event.parameter, "going") { going in
+            going.post(handler: eventController.addUserToGoing)
+            going.delete(handler: eventController.removeUserFromGoing)
         }
         
-        group("events", Event.parameter, "conversations") { interested in
-            interested.post(handler: eventController.createConversation)
+        group("events", Event.parameter, "conversations") { conversation in
+            conversation.post(handler: eventController.createConversation)
         }
         
         try resource("events", EventController.self)

@@ -11,7 +11,7 @@ final class SessionController: ResourceRepresentable {
     
     func store(_ req: Request) throws -> ResponseRepresentable {
         let token = try AuthMiddleware.login(req.userByCredential())
-        return try JSON(node: ["id": token])
+        return try JSON(node: ["token": token])
     }
     
     func delete(_ req: Request) throws -> ResponseRepresentable {
