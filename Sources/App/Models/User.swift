@@ -87,6 +87,18 @@ extension User: JSONConvertible {
         try json.set(Keys.locations, try locations.all().flatMap( { $0.id }))
         return json
     }
+  
+  func makeDetailJSON() throws -> JSON {
+      var json = JSON()
+      if let id: Identifier = self.id {
+        try json.set(Keys.id, id)
+      }
+      try json.set(Keys.userName, userName)
+      try json.set(Keys.name, name)
+      try json.set(Keys.profilePic, profilePic)
+      try json.set(Keys.activities, try activities.all().makeJSON() )
+      return json
+  }
     
     convenience init(json: JSON) throws {
         self.init(name: try json.get(Keys.name),
