@@ -129,6 +129,28 @@ extension Event: JSONConvertible {
         
         return json
     }
+  
+  func makeDetailJSON() throws -> JSON {
+    var json = JSON()
+    if let id = self.id {
+      try json.set(Keys.id, id)
+    }
+    try json.set(Keys.creator, User.find(creator)?.makeJSON())
+    try json.set(Keys.minCount, minCount)
+    try json.set(Keys.maxCount, maxCount)
+    try json.set(Keys.startDate, startDate)
+    try json.set(Keys.endDate, endDate)
+    try json.set(Keys.longitude, longitude)
+    try json.set(Keys.latitude, latitude)
+    try json.set(Keys.location, location)
+    try json.set(Keys.description, description)
+    try json.set(Keys.isPrivate, isPrivate)
+    try json.set(Keys.activityId, try activity.get()?.id)
+    try json.set(Keys.activityName, try activity.get()?.name)
+    try json.set(Keys.goings, try usersGoing.all().makeJSON() )
+    
+    return json
+  }
     
     convenience init(json: JSON) throws {
         let activityId: Identifier = try json.get("activityId")

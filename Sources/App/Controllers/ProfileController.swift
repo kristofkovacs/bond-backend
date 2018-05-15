@@ -40,7 +40,9 @@ final class ProfileController {
         
         try req.data["ids"]?.array?.forEach({ idNode in
             guard let id = idNode.string else { throw Abort.badRequest }
-            if let _ = try? user.activities.find(id) { throw Abort(.notModified) }
+            if let userActivity = try? user.activities.find(id) {
+                throw Abort(.notModified)
+            }
             guard let activity = (try? Activity.find(id)) ?? nil else { throw Abort.notFound }
             try user.activities.add(activity)
         })

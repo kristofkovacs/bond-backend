@@ -14,7 +14,7 @@ final class EventController: ResourceRepresentable {
     }
     
     func show(_ req: Request, event: Event) throws -> ResponseRepresentable {
-        return event
+        return try event.makeDetailJSON()
     }
     
     func store(_ req: Request) throws -> ResponseRepresentable {
