@@ -59,36 +59,33 @@ extension EventController {
     
     func addUserToInterested(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
-        guard let userId = req.data["id"]?.string else { throw Abort.badRequest }
-        throw Abort(.notImplemented, reason: "Should add \(userId) to \(event.description) interested")
+        let user = try req.authStatus.authenticatedUser()
+        throw Abort(.notImplemented, reason: "Should add \(user.userName) to \(event.description ?? "event") interested")
     }
     
     func removeUserFromInterested(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
-        let userId = try req.parameters.next(String.self)
-        throw Abort(.notImplemented, reason: "Should remove \(userId) from \(event.description) interested")
+        let user = try req.authStatus.authenticatedUser()
+        throw Abort(.notImplemented, reason: "Should remove \(user.userName) from \(event.description ?? "event") interested")
     }
     
     func addUserToGoing(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
-        guard let userId = req.data["id"]?.string, let user = try User.find(userId) else { throw Abort.badRequest }
-        if let _ = try event.usersGoing.find(userId) {
-            throw Abort(.conflict)
-        }
+        let user = try req.authStatus.authenticatedUser()
+        if try event.usersGoing.isAttached(user) { throw Abort(.notModified) }
         try event.usersGoing.add(user)
         return Response(status: .ok)
     }
     
     func removeUserFromGoing(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
-        let userId = try req.parameters.next(String.self)
-        guard let user = try User.find(userId) else { throw Abort.badRequest }
+        let user = try req.authStatus.authenticatedUser()
         try event.usersGoing.remove(user)
         return Response(status: .ok)
     }
     
     func createConversation(_ req: Request) throws -> ResponseRepresentable {
         let event = try req.parameters.next(Event.self)
-        throw Abort(.notImplemented, reason: "Should create a conversation for \(event.description)")
+        throw Abort(.notImplemented, reason: "Should create a conversation for \(event.description ?? "event")")
     }
 }

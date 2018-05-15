@@ -9,7 +9,8 @@ final class UserController: ResourceRepresentable {
     func store(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.user()
         try user.save()
-        return user.createdResponse
+        let token = try AuthMiddleware.login(user)
+        return try JSON(node: ["token": token])
     }
     
     func show(_ req: Request, user: User) throws -> ResponseRepresentable {

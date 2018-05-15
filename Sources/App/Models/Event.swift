@@ -80,7 +80,6 @@ final class Event: Model {
     var usersGoing: Siblings<Event, User, Pivot<Event, User>> {
         return siblings()
     }
-    
 }
 
 extension Event: Preparation {
@@ -159,9 +158,6 @@ extension Event: JSONConvertible {
         }
         try self.init(from: json, activity: activity)
     }
-    
-   
-    
 }
 
 extension Event {
