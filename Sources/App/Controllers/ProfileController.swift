@@ -18,8 +18,8 @@ final class ProfileController {
         
         try req.data["ids"]?.array?.forEach({ idNode in
             guard let id = idNode.string else { throw Abort.badRequest }
-            if let _ = try? user.locations.find(id) { throw Abort(.notModified) }
             guard let location = (try? Location.find(id)) ?? nil else { throw Abort.notFound }
+            if try user.locations.isAttached(location) { throw Abort(.notModified) }
             try user.locations.add(location)
         })
         
@@ -40,10 +40,8 @@ final class ProfileController {
         
         try req.data["ids"]?.array?.forEach({ idNode in
             guard let id = idNode.string else { throw Abort.badRequest }
-            if let userActivity = try? user.activities.find(id) {
-                throw Abort(.notModified)
-            }
             guard let activity = (try? Activity.find(id)) ?? nil else { throw Abort.notFound }
+            if try user.activities.isAttached(activity) { throw Abort(.notModified) }
             try user.activities.add(activity)
         })
         
