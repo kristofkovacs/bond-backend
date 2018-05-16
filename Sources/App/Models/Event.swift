@@ -134,7 +134,7 @@ extension Event: JSONConvertible {
     if let id = self.id {
       try json.set(Keys.id, id)
     }
-    try json.set(Keys.creator, User.find(creator)?.makeJSON())
+    try json.set(Keys.creator, User.find(creator)?.makeDetailJSON())
     try json.set(Keys.minCount, minCount)
     try json.set(Keys.maxCount, maxCount)
     try json.set(Keys.startDate, startDate)
@@ -146,7 +146,12 @@ extension Event: JSONConvertible {
     try json.set(Keys.isPrivate, isPrivate)
     try json.set(Keys.activityId, try activity.get()?.id)
     try json.set(Keys.activityName, try activity.get()?.name)
-    try json.set(Keys.goings, try usersGoing.all().makeJSON() )
+    if let goings = try? usersGoing.all(), goings.count != 0 {
+      try json.set(Keys.goings, try usersGoing.all().makeJSON() )
+    } else {
+      try json.set(Keys.goings, [String]() )
+    }
+    
     
     return json
   }
