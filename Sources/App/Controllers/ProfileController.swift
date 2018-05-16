@@ -9,8 +9,8 @@ import Foundation
 
 final class ProfileController {
     
-    func showUser(_ req: Request) throws -> User {
-        return try req.authStatus.authenticatedUser()
+    func showUser(_ req: Request) throws -> ResponseRepresentable {
+        return try req.authStatus.authenticatedUser().makeDetailJSON()
     }
     
     func addLocation(_ req: Request) throws -> ResponseRepresentable {

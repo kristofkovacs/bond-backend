@@ -99,6 +99,10 @@ extension User: JSONConvertible {
       try json.set(Keys.activities, try activities.all().makeJSON() )
       return json
   }
+  
+//  func makeProfileJSON() throws -> JSON {
+//    
+//  }
     
     convenience init(json: JSON) throws {
         self.init(name: try json.get(Keys.name),

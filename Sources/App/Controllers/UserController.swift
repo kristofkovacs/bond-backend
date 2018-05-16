@@ -14,7 +14,7 @@ final class UserController: ResourceRepresentable {
     }
     
     func show(_ req: Request, user: User) throws -> ResponseRepresentable {
-        return user
+        return try user
     }
     
     func delete(_ req: Request, user: User) throws -> ResponseRepresentable {
